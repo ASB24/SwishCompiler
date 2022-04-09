@@ -28,17 +28,18 @@ namespace SwishCompiler
         private static string[] reserved = { "numerical", "chararray", "char", "floating" };
         private static string[] operators = { "+", "-", "<", ">"};
         private static Dictionary<string, Variable> symbols = new Dictionary<string, Variable>();
+        // a: Variable{ string, "tato" }
         
         /// <summary>
         /// Adds a rule to the symbol table.
         /// </summary>
         /// <param name="rule"></param>
         /// <returns>Returns true if the symbol was added, otherwise false.</returns>
-        public static bool add(string symbol, string value)
+        public static bool add(string symbol, string type, string value)
         {
             if (!symbols.ContainsKey(symbol))
             {
-                symbols.Add(symbol, value);
+                symbols.Add(symbol, new Variable(type, value));
                 return true;
             }
             return false;
@@ -61,7 +62,7 @@ namespace SwishCompiler
         /// </summary>
         /// <param name="key"></param>
         /// <returns>Returns a string of the found rule, otherwise it return null.</returns>
-        public static string lookup(string key)
+        public static Variable lookup(string key)
         {
             if (symbols.ContainsKey(key))
             {
@@ -75,9 +76,9 @@ namespace SwishCompiler
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public static void update(string key, string value)
+        public static void update(string key, string type, string value)
         {
-            symbols[key] = value;
+            symbols[key] = new Variable(symbols[key].getType(), value);
         }
 
         /// <summary>
