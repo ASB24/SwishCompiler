@@ -45,6 +45,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rule.cs" />
+    <Compile Include="SymbolTable.cs" />
+    <Compile Include="SynctaticAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
