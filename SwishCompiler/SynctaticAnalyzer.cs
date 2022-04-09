@@ -8,10 +8,12 @@ namespace SwishCompiler
 {
     public static class SynctaticAnalyzer
     {
-        public static bool validSyntax(List<string[]> lines)
+        public static bool validSyntax(List<string> lines)
         {
-            foreach(string[] line in lines)
+            string[] line;
+            foreach(string linea in lines)
             {
+                line = linea.Split(' ');
                 for(int i = 0; i < line.Length-1; i++)
                 {
                     try

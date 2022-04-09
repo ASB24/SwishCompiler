@@ -11,7 +11,7 @@ namespace SwishCompiler
         static void Main(string[] args)
         {
 
-            List<string[]> lines = new List<string[]>();
+            List<string> lines = new List<string>();
             string line = " ";
 
             while (true)
@@ -21,7 +21,7 @@ namespace SwishCompiler
                 if (line == "EOF") break;
                 else if (line == "") continue;
 
-                lines.Add(line.Split(' '));
+                lines.Add(line);
             }
 
             /*
@@ -43,7 +43,9 @@ namespace SwishCompiler
             if(!SemanticAnalyzer.validSemantics(lines))
             {
                 Console.WriteLine("Se encontraron errores semanticos porfavor verifique e intentelo nuevamente");
+                return;
             }
+            Console.WriteLine("El asunto ta bien");
             Console.ReadKey();
         }
     }

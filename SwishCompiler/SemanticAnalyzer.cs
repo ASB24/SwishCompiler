@@ -8,75 +8,108 @@ namespace SwishCompiler
 {
     public static class SemanticAnalyzer
     {
-        public static bool validSemantics(List<string[]> lines)
+        public static bool validSemantics(List<string> lines)
         {
-            try
-            {
-                string[] expression;
-                foreach (string[] line in lines)
+                foreach (string line in lines)
                 {
-                    int index = Array.IndexOf(line,"=");
-                    expression =  new string[line.Length-index];
-                    Array.Copy(line,index+1,expression,0,expression.Length);
-                    for(int j = 0; j< expression.Length;j++)
+
+                    string[] right = line.Split('=')[1].Split(' ');
+                    string[] left = line.Split('=')[0].Split(' ');
+
+                    //Evaluar la expresion de la derecha
+                    string evaluatedType = evaluateExpressionType(right);
+
+
+                    //Chequear si variable existe
+                    if (left.Length == 2)
                     {
-                        Console.WriteLine(expression[j]);
-                    }
-                    return true;
-                    for (int i = 0; i < line.Length - 1; i++)
-                    {
 
+                        string type = left[0];
+                        string name = left[1];
 
+                        if (SymbolTable.has(name))
+                        {
+                            Console.WriteLine("La variable " + name + " ya existe.");
+                            return false;
+                        }
+                        else if (type != evaluatedType)
+                        {
+                            Console.WriteLine("Tipo de dato invalido");
+                            return false;
+                        }
 
-                        return false;
-
-
-
-
-
-
-
-                        //if (SymbolTable.isReserved(line[0]))
-                        //{
-                        //   //Significa que es una declaracion de variable
-                        //   if(!SymbolTable.has(line[1]))
-                        //    {
-                        //        try
-                        //        {
-
-
-                        //        }catch 
-                        //    }
-
-
-
-                        //}
-
-
-
-
-
-
-
-
-
-
-
-
+                        SymbolTable.add(name, evaluatedType);
 
                     }
+                    else if (left.Length == 1)
+                    {
 
+                        string name = left[1];
+                        string type = SymbolTable.lookup(name);
 
+                        if (!SymbolTable.has(name))
+                        {
+                            Console.WriteLine("La variable no ha sido declarada anteriormente");
+                            return false;
+                        }
 
+                    }
             }
-            }catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return false;
+            return true;
         }
 
+        public static string evaluateExpressionType(string[] expression)
+        {
+            int i;
+            string left;
+            string right;
 
+            string type = "";
+
+            foreach(string word in expression)
+            {
+                if (SymbolTable.isOperator(word))
+                {
+                    //Saca el valor de la derecha e izquierda de operador
+                    i = Array.IndexOf(expression, word);
+                    left = expression[i - 1];
+                    right = expression[i + 1];
+                    
+                    //Saca valor de variable
+                    if (SymbolTable.has(left))
+                    {
+                        left = SymbolTable.lookup(left);
+                    }
+                    if (SymbolTable.has(right))
+                    {
+                        left = SymbolTable.lookup(right);
+                    }
+
+                    //Revisa si son del mismo tipo
+                    type = getType(left);
+                    if ( type == getType(right))
+                    {
+                        
+                    }
+                }
+            }
+            return type;
+        }
+
+        public static string getType(string word)
+        {
+            if( Int32.TryParse(word,out int a))
+            {
+                return "numerical";
+            }else if( Char.TryParse(word, out char c))
+            {
+                return "char";
+            }else if( word[0] == '"' && word[word.Length-1] == '"')
+            {
+                return "chararray";
+            }
+            return null;
+        }
 
 
 
