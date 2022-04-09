@@ -43,9 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LexicAnalyzer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rule.cs" />
+    <Compile Include="SemanticAnalyzer.cs" />
     <Compile Include="SymbolTable.cs" />
     <Compile Include="SynctaticAnalyzer.cs" />
   </ItemGroup>

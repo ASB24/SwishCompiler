@@ -11,24 +11,31 @@ namespace SwishCompiler
         static void Main(string[] args)
         {
 
-            List<HashSet<string>> lines = new List<HashSet<string>>();
+            List<string[]> lines = new List<string[]>();
             string line = " ";
-
-            HashSet<string> temp = new HashSet<string>();
 
             while (true)
             {
                 line = Console.ReadLine();
 
-                if (line != null || line == "EOF") break;
+                if (line == "EOF") break;
+                else if (line == "") continue;
 
-                foreach(string variable in line.Split(' '))
-                {
-                    temp.Add(variable);
-                }
-                lines.Add(temp);
-                temp.Clear();
+                lines.Add(line.Split(' '));
             }
+
+            /*
+            for(int i = 0; i < lines.Count; i++)
+            {
+                for(int j = 0; j < lines[i].Length; j++)
+                {
+                    Console.WriteLine(lines[i][j]);
+                }
+            }
+            */
+
+            Console.WriteLine(SynctaticAnalyzer.validSyntax(lines));
+            Console.ReadKey();
         }
     }
 }

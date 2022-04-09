@@ -8,20 +8,56 @@ namespace SwishCompiler
 {
     public static class SynctaticAnalyzer
     {
-
-        /// <summary>
-        /// Checks for syntax errores in a single sentence
-        /// </summary>
-        /// <param name="declarations"></param>
-        /// <returns>Returns true if the sentence has a valid syntax, otherwise false.</returns>
-        public static bool validSyntax(string declarations)
+        public static bool validSyntax(List<string[]> lines)
         {
-            string[] sentencias = declarations.Split(' ');
-            if(SymbolTable.get(sentencias[0]) != null)
+            foreach(string[] line in lines)
             {
-                return true;
+                for(int i = 0; i < line.Length-1; i++)
+                {
+                    try
+                    {
+                        if (line[i].Length > 1 && SymbolTable.existsReserved(line[i]))
+                        {
+                            Console.WriteLine("Un espacio por palabra/operador, " + line[i]);
+                            return false;
+                        }
+                        else if (SymbolTable.isReserved(line[i]) && i != 0 && line[2] != "=")
+                        {
+                            Console.WriteLine("Mal asignacion en linea " + (i+1).ToString());
+                            return false;
+                        }else if (i == 0)
+                        {
+                            continue;
+                        }
+                        else if (line[i] == "=" && (!SymbolTable.isVariable(line[i - 1]) || !SymbolTable.isVariable(line[i + 1])))
+                        {
+                            Console.WriteLine("Ta usando el igual mal en " + (i + 1).ToString());
+                            return false;
+                        }
+                        else if (SymbolTable.isOperator(line[i]) && (!SymbolTable.isVariable(line[i - 1]) || !SymbolTable.isVariable(line[i + 1])))
+                        {
+                            Console.WriteLine("Nota operando el asunto " + line[i]);
+                            return false;
+                        }
+                        else if (
+                                SymbolTable.isVariable(line[i]) &&
+                                ( !SymbolTable.isOperator(line[i - 1]) && !SymbolTable.isOperator(line[i + 1]) ) &&
+                                ( line[i-1] != "=" && line[i + 1] != "=" ) &&
+                                !SymbolTable.isReserved(line[i - 1])
+                            )
+                        {
+                            Console.WriteLine("No se ta operando en la variable " + line[i]);
+                            return false;
+                        }
+                    }catch (Exception ex)
+                    {
+                        Console.WriteLine("Te saliste de lo lao");
+                        return false;
+                    }
+                    
+                }
             }
-            return false;
+            return true;
         }
     }
 }
