@@ -34,7 +34,16 @@ namespace SwishCompiler
             }
             */
 
-            Console.WriteLine(SynctaticAnalyzer.validSyntax(lines));
+            if(!SynctaticAnalyzer.validSyntax(lines))
+            {
+                Console.WriteLine("Se encontraron errores de sintx porfavor verifique e intentelo nuevamente");
+                return;
+
+            }
+            if(!SemanticAnalyzer.validSemantics(lines))
+            {
+                Console.WriteLine("Se encontraron errores semanticos porfavor verifique e intentelo nuevamente");
+            }
             Console.ReadKey();
         }
     }

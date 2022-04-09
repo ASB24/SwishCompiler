@@ -25,7 +25,7 @@ namespace SwishCompiler
     static class SymbolTable
     {
 
-        private static string[] reserved = { "numerical", "chararray", "char", "floating" };
+        private static string[] reserved = { "numerical", "chararray", "char"};
         private static string[] operators = { "+", "-", "<", ">"};
         private static Dictionary<string, Variable> symbols = new Dictionary<string, Variable>();
         // a: Variable{ string, "tato" }
