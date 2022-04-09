@@ -6,12 +6,28 @@ using System.Threading.Tasks;
 
 namespace SwishCompiler
 {
+    class Variable
+    {
+        private string value;
+        private string type;
+
+        public Variable(string type, string value)
+        {
+            this.type = type;
+            this.value = value;
+        }
+
+        public string getType() { return type; }
+        public string getValue() { return value; }
+
+        public void updateValue(string value) { this.value = value; }
+    }
     static class SymbolTable
     {
 
         private static string[] reserved = { "numerical", "chararray", "char", "floating" };
         private static string[] operators = { "+", "-", "<", ">"};
-        private static Dictionary<string, string> symbols = new Dictionary<string, string>();
+        private static Dictionary<string, Variable> symbols = new Dictionary<string, Variable>();
         
         /// <summary>
         /// Adds a rule to the symbol table.
