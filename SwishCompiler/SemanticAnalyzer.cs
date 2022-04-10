@@ -42,19 +42,37 @@ namespace SwishCompiler
                         SymbolTable.add(name, evalType);
                         }
 
-                    }CLSCompliantAttribute
+                    }
                     //Chequear una operacion
                     else if (left.Length == 1)
                     {
-
-                        string name = left[0];
-                        string type = SymbolTable.lookup(name);
-
-                        if (!SymbolTable.has(name))
+                        if(right.Length > 1)
                         {
-                            Console.WriteLine("La variable no ha sido declarada anteriormente");
-                            return false;
+                        
+                        string name = left[0];
+                        string rightStart = right[0];
+                        string rightFinish = right[right.Length-1];
+
+
+
+
+                            if (!SymbolTable.has(name))
+                            {
+                                Console.WriteLine("La variable "+ name +" no ha sido declarada anteriormente");
+                                return false;
+                            }
+                            else if(!SymbolTable.has(rightStart))
+                            {
+                                Console.WriteLine("La variable "+rightStart + " no ha sido declarada anteriormente");
+                                return false;
+                            }
+                            else if(!SymbolTable.has(rightFinish))
+                            {
+                                Console.WriteLine("La variable "+rightFinish + " no ha sido declarada anteriormente");
+                                return false;
+                            }
                         }
+
 
                     }
             }

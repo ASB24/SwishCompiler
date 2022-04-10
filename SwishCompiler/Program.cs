@@ -49,7 +49,7 @@ namespace SwishCompiler
             }
             else
             {
-                Console.WriteLine("El asunto ta bien");
+                Console.WriteLine("No se detectaron errores, el programa ha terminado con exito");
                 Console.ReadKey();
             }
 
