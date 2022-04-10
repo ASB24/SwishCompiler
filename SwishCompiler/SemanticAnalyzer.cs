@@ -10,13 +10,11 @@ namespace SwishCompiler
     {
         public static bool validSemantics(List<string> lines)
         {
+            int contador = 0;
                 foreach (string line in lines)
                 {
-
                     string[] right = line.Split('=')[1].Trim().Split(' ');
                     string[] left = line.Split('=')[0].Trim().Split(' ');
-
-
 
 
                 //Evaluar la expresion de la derecha
@@ -24,6 +22,8 @@ namespace SwishCompiler
                     //Chequear si variable existe
                     if (left.Length == 2)
                     {
+                        contador++;   
+                        Console.WriteLine("Declaracion de variable en la linea "+contador);
                         string evalType = getType(right[0]);
                         string type = left[0];
                         string name = left[1];
@@ -46,7 +46,9 @@ namespace SwishCompiler
                     //Chequear una operacion
                     else if (left.Length == 1)
                     {
-                        if(right.Length > 1)
+                    contador++;
+                    Console.WriteLine("Operacion matematica en la linea " + contador);
+                    if (right.Length > 1)
                         {
                         
                         string name = left[0];
@@ -58,17 +60,17 @@ namespace SwishCompiler
 
                             if (!SymbolTable.has(name))
                             {
-                                Console.WriteLine("La variable "+ name +" no ha sido declarada anteriormente");
+                                Console.WriteLine("La variable '"+ name +"' no ha sido declarada anteriormente");
                                 return false;
                             }
                             else if(!SymbolTable.has(rightStart))
                             {
-                                Console.WriteLine("La variable "+rightStart + " no ha sido declarada anteriormente");
+                                Console.WriteLine("La variable '"+rightStart + "' no ha sido declarada anteriormente");
                                 return false;
                             }
                             else if(!SymbolTable.has(rightFinish))
                             {
-                                Console.WriteLine("La variable "+rightFinish + " no ha sido declarada anteriormente");
+                                Console.WriteLine("La variable '"+rightFinish + "' no ha sido declarada anteriormente");
                                 return false;
                             }
                         }
