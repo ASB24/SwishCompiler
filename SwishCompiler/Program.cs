@@ -36,17 +36,23 @@ namespace SwishCompiler
 
             if(!SynctaticAnalyzer.validSyntax(lines))
             {
-                Console.WriteLine("Se encontraron errores de sintx porfavor verifique e intentelo nuevamente");
+                Console.WriteLine("Se encontraron errores de sintax porfavor verifique e intentelo nuevamente");
+                Console.ReadKey();
                 return;
 
             }
-            if(!SemanticAnalyzer.validSemantics(lines))
+            else if(!SemanticAnalyzer.validSemantics(lines))
             {
                 Console.WriteLine("Se encontraron errores semanticos porfavor verifique e intentelo nuevamente");
+                Console.ReadKey();
                 return;
             }
-            Console.WriteLine("El asunto ta bien");
-            Console.ReadKey();
+            else
+            {
+                Console.WriteLine("El asunto ta bien");
+                Console.ReadKey();
+            }
+
         }
     }
 }

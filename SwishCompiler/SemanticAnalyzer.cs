@@ -13,38 +13,41 @@ namespace SwishCompiler
                 foreach (string line in lines)
                 {
 
-                    string[] right = line.Split('=')[1].Split(' ');
-                    string[] left = line.Split('=')[0].Split(' ');
+                    string[] right = line.Split('=')[1].Trim().Split(' ');
+                    string[] left = line.Split('=')[0].Trim().Split(' ');
 
-                    //Evaluar la expresion de la derecha
-                    string evaluatedType = evaluateExpressionType(right);
 
+
+
+                //Evaluar la expresion de la derecha
 
                     //Chequear si variable existe
                     if (left.Length == 2)
                     {
-
+                        string evalType = getType(right[0]);
                         string type = left[0];
                         string name = left[1];
-
                         if (SymbolTable.has(name))
                         {
                             Console.WriteLine("La variable " + name + " ya existe.");
                             return false;
                         }
-                        else if (type != evaluatedType)
+                        else if (type != evalType)
                         {
                             Console.WriteLine("Tipo de dato invalido");
                             return false;
                         }
+                        else
+                        {
+                        SymbolTable.add(name, evalType);
+                        }
 
-                        SymbolTable.add(name, evaluatedType);
-
-                    }
+                    }CLSCompliantAttribute
+                    //Chequear una operacion
                     else if (left.Length == 1)
                     {
 
-                        string name = left[1];
+                        string name = left[0];
                         string type = SymbolTable.lookup(name);
 
                         if (!SymbolTable.has(name))
@@ -86,10 +89,10 @@ namespace SwishCompiler
                     }
 
                     //Revisa si son del mismo tipo
-                    type = getType(left);
-                    if ( type == getType(right))
+
+                    if ( getType(left) == getType(right))
                     {
-                        
+                        type = getType(left);
                     }
                 }
             }
@@ -98,21 +101,22 @@ namespace SwishCompiler
 
         public static string getType(string word)
         {
-            if( Int32.TryParse(word,out int a))
-            {
-                return "numerical";
-            }else if( Char.TryParse(word, out char c))
-            {
-                return "char";
-            }else if( word[0] == '"' && word[word.Length-1] == '"')
-            {
-                return "chararray";
-            }
-            return null;
+                if (Int32.TryParse(word, out int a))
+                {
+                    return "numerical";
+                }
+                else if (Char.TryParse(word, out char c))
+                {
+                    return "char";
+                }
+                else if (word[0] == '"' && word[word.Length - 1] == '"')
+                {
+                    return "chararray";
+                }
+                else
+                {
+                    return null;
+                }
         }
-
-
-
-
     }
 }
