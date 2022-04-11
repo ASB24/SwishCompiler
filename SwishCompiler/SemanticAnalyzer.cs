@@ -11,6 +11,7 @@ namespace SwishCompiler
         public static bool validSemantics(List<string> lines)
         {
             int contador = 0;
+            Dictionary<string, int> cuentas = new Dictionary<string, int>();
                 foreach (string line in lines)
                 {
                     string[] right = line.Split('=')[1].Trim().Split(' ');
@@ -23,13 +24,13 @@ namespace SwishCompiler
                     if (left.Length == 2)
                     {
                         contador++;   
-                        Console.WriteLine("Declaracion de variable en la linea "+contador);
+                        //Console.WriteLine("Declaracion de variable en la linea "+contador);
                         string evalType = SymbolTable.getType(right[0]);
                         string type = left[0];
                         string name = left[1];
-                        if (SymbolTable.has(name))
+                        if ( SymbolTable.has(name) && SymbolTable.lookup(name) != "operator" && SymbolTable.lookup(name) != "reserved" && cuentas.ContainsKey(name) )
                         {
-                            Console.WriteLine("La variable " + name + " ya existe.");
+                            if(cuentas[name] == 1) Console.WriteLine("La variable " + name + " ya existe.");
                             return false;
                         }
                         else if (type != evalType)
@@ -39,7 +40,7 @@ namespace SwishCompiler
                         }
                         else
                         {
-                        SymbolTable.add(name, evalType);
+                            cuentas[name] = 1;
                         }
 
                     }
@@ -47,7 +48,7 @@ namespace SwishCompiler
                     else if (left.Length == 1)
                     {
                     contador++;
-                    Console.WriteLine("Operacion matematica en la linea " + contador);
+                    //Console.WriteLine("Operacion matematica en la linea " + contador);
                     if (right.Length > 1)
                         {
                         

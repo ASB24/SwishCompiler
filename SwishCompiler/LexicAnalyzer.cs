@@ -19,20 +19,19 @@ namespace SwishCompiler
                     {
                         if (SymbolTable.isOperator(simbolo))
                         {
-                            SymbolTable.add(simbolo, "Operator");
+                            SymbolTable.add(simbolo, "operator");
                         }
                         else if (SymbolTable.isReserved(simbolo))
                         {
-                            SymbolTable.add(simbolo, "palabra reservada");
+                            SymbolTable.add(simbolo, "reserved");
                         }
                         else
                         {
-                            SymbolTable.add(simbolo, SymbolTable.getType(simbolo));
+                            SymbolTable.add(simbolo, line[0]);
                         }
                     }
                 }
             }
-            SymbolTable.printsymbols();
             return true;
         }
     }

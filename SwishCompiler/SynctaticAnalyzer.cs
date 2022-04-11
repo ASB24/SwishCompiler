@@ -51,14 +51,18 @@ namespace SwishCompiler
                             return false;
                         }
 
-                        foreach(char c in line[i])
+                        if(line[i].Length > 1)
                         {
-                            if (SymbolTable.isOperator(c.ToString()) || c == '=')
+                            foreach (char c in line[i])
                             {
-                                Console.WriteLine("Los operadores y el igual deben estar separados de las variables, en la linea " + lineNum);
-                                return false;
+                                if (SymbolTable.isOperator(c.ToString()) || c == '=')
+                                {
+                                    Console.WriteLine("Los operadores y el igual deben estar separados de las variables, en la linea " + lineNum);
+                                    return false;
+                                }
                             }
                         }
+                        
                     }catch (Exception ex)
                     {
                         Console.WriteLine("Hubo un error de indice");

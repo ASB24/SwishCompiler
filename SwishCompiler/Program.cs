@@ -24,30 +24,19 @@ namespace SwishCompiler
                 lines.Add(line);
             }
 
-            /*
-            for(int i = 0; i < lines.Count; i++)
+            if (!SynctaticAnalyzer.validSyntax(lines))
             {
-                for(int j = 0; j < lines[i].Length; j++)
-                {
-                    Console.WriteLine(lines[i][j]);
-                }
-            }
-            */
-
-            if (!LexicAnalyzer.CreateTokens(lines)) 
-            {
-                Console.WriteLine("no se pudo crear los tokens con el codigo fuente porfavor verifique e intentelo nuevamente");
+                Console.WriteLine("Se encontraron errores sintacticos porfavor verifique e intentelo nuevamente");
                 Console.ReadKey();
                 return;
             }
-            else if (!SynctaticAnalyzer.validSyntax(lines))
+            if (!LexicAnalyzer.CreateTokens(lines))
             {
-                Console.WriteLine("Se encontraron errores de sintax porfavor verifique e intentelo nuevamente");
+                Console.WriteLine("Se encontraron errores lexicos porfavor verifique e intentelo nuevamente");
                 Console.ReadKey();
                 return;
-
             }
-            else if (!SemanticAnalyzer.validSemantics(lines))
+            if (!SemanticAnalyzer.validSemantics(lines))
             {
                 Console.WriteLine("Se encontraron errores semanticos porfavor verifique e intentelo nuevamente");
                 Console.ReadKey();
