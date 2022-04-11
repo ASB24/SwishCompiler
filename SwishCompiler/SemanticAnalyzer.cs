@@ -24,7 +24,7 @@ namespace SwishCompiler
                     {
                         contador++;   
                         Console.WriteLine("Declaracion de variable en la linea "+contador);
-                        string evalType = getType(right[0]);
+                        string evalType = SymbolTable.getType(right[0]);
                         string type = left[0];
                         string name = left[1];
                         if (SymbolTable.has(name))
@@ -110,33 +110,13 @@ namespace SwishCompiler
 
                     //Revisa si son del mismo tipo
 
-                    if ( getType(left) == getType(right))
+                    if (SymbolTable.getType(left) == SymbolTable.getType(right))
                     {
-                        type = getType(left);
+                        type = SymbolTable.getType(left);
                     }
                 }
             }
             return type;
-        }
-
-        public static string getType(string word)
-        {
-                if (Int32.TryParse(word, out int a))
-                {
-                    return "numerical";
-                }
-                else if (Char.TryParse(word, out char c))
-                {
-                    return "char";
-                }
-                else if (word[0] == '"' && word[word.Length - 1] == '"')
-                {
-                    return "chararray";
-                }
-                else
-                {
-                    return null;
-                }
         }
     }
 }

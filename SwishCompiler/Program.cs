@@ -34,14 +34,20 @@ namespace SwishCompiler
             }
             */
 
-            if(!SynctaticAnalyzer.validSyntax(lines))
+            if (!LexicAnalyzer.CreateTokens(lines)) 
+            {
+                Console.WriteLine("no se pudo crear los tokens con el codigo fuente porfavor verifique e intentelo nuevamente");
+                Console.ReadKey();
+                return;
+            }
+            else if (!SynctaticAnalyzer.validSyntax(lines))
             {
                 Console.WriteLine("Se encontraron errores de sintax porfavor verifique e intentelo nuevamente");
                 Console.ReadKey();
                 return;
 
             }
-            else if(!SemanticAnalyzer.validSemantics(lines))
+            else if (!SemanticAnalyzer.validSemantics(lines))
             {
                 Console.WriteLine("Se encontraron errores semanticos porfavor verifique e intentelo nuevamente");
                 Console.ReadKey();

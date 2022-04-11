@@ -13,7 +13,17 @@ namespace SwishCompiler
         private static string[] operators = { "+", "-", "<", ">"};
         private static Dictionary<string, string> symbols = new Dictionary<string, string>();
         // a: Variable{ string, "tato" }
-        
+
+
+        /// <summary>
+        /// Prints the values and keys inside the symbols dictionary
+        /// </summary>
+        public static void printsymbols() 
+        {
+            symbols.ToList().ForEach(x => Console.WriteLine(x.Key, x.Value));
+        }
+
+
         /// <summary>
         /// Adds a rule to the symbol table.
         /// </summary>
@@ -99,6 +109,32 @@ namespace SwishCompiler
             return false;
         }
 
+
+        /// <summary>
+        /// obtains the type of the of the inserted string
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
+        public static string getType(string word)
+        {
+            if (Int32.TryParse(word, out int a))
+            {
+                return "numerical";
+            }
+            else if (Char.TryParse(word, out char c))
+            {
+                return "char";
+            }
+            else if (word[0] == '"' && word[word.Length - 1] == '"')
+            {
+                return "chararray";
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Returns whether the word is an operator or not.
         /// </summary>
@@ -108,10 +144,10 @@ namespace SwishCompiler
         {
             return operators.Contains(word) || word == "=";
         }
-
         public static bool isVariable(string word)
         {
             return !isReserved(word) && !isOperator(word);
         }
+
     }
 }
