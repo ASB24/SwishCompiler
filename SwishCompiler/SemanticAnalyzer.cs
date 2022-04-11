@@ -10,7 +10,7 @@ namespace SwishCompiler
     {
         public static bool validSemantics(List<string> lines)
         {
-            int contador = 0;
+            int contador = 1;
             Dictionary<string, int> cuentas = new Dictionary<string, int>();
                 foreach (string line in lines)
                 {
@@ -23,8 +23,8 @@ namespace SwishCompiler
                     //Chequear si variable existe
                     if (left.Length == 2)
                     {
+                        Console.WriteLine("Definicion de variable en la linea: "+ contador);
                         contador++;   
-                        //Console.WriteLine("Declaracion de variable en la linea "+contador);
                         string evalType = SymbolTable.getType(right[0]);
                         string type = left[0];
                         string name = left[1];
@@ -47,8 +47,8 @@ namespace SwishCompiler
                     //Chequear una operacion
                     else if (left.Length == 1)
                     {
+                    Console.WriteLine("Operacion en la linea: " + contador);
                     contador++;
-                    //Console.WriteLine("Operacion matematica en la linea " + contador);
                     if (right.Length > 1)
                         {
                         
@@ -80,44 +80,6 @@ namespace SwishCompiler
                     }
             }
             return true;
-        }
-
-        public static string evaluateExpressionType(string[] expression)
-        {
-            int i;
-            string left;
-            string right;
-
-            string type = "";
-
-            foreach(string word in expression)
-            {
-                if (SymbolTable.isOperator(word))
-                {
-                    //Saca el valor de la derecha e izquierda de operador
-                    i = Array.IndexOf(expression, word);
-                    left = expression[i - 1];
-                    right = expression[i + 1];
-                    
-                    //Saca valor de variable
-                    if (SymbolTable.has(left))
-                    {
-                        left = SymbolTable.lookup(left);
-                    }
-                    if (SymbolTable.has(right))
-                    {
-                        left = SymbolTable.lookup(right);
-                    }
-
-                    //Revisa si son del mismo tipo
-
-                    if (SymbolTable.getType(left) == SymbolTable.getType(right))
-                    {
-                        type = SymbolTable.getType(left);
-                    }
-                }
-            }
-            return type;
         }
     }
 }
